@@ -1,0 +1,14 @@
+{%- assign share_url = page.url | absolute_url | url_encode -%}
+{%- assign share_title = page.title | url_encode -%}
+<div class="share">
+  <p class="share__label">Share</p>
+  <ul class="share__list">
+    <li><a href="https://twitter.com/intent/tweet?url={{ share_url }}&amp;text={{ share_title }}" target="_blank" rel="noopener" aria-label="Share on X">{% include icon.html name="x" %}</a></li>
+    <li><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">{% include icon.html name="linkedin" %}</a></li>
+    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">{% include icon.html name="facebook" %}</a></li>
+    <li><a href="https://pinterest.com/pin/create/button/?url={{ share_url }}&amp;media={{ page.image | absolute_url | url_encode }}&amp;description={{ share_title }}" target="_blank" rel="noopener" aria-label="Share on Pinterest">{% include icon.html name="pinterest" %}</a></li>
+    <li><a href="https://wa.me/?text={{ share_title }}%20{{ share_url }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">{% include icon.html name="whatsapp" %}</a></li>
+    <li><a href="mailto:?subject={{ share_title }}&amp;body={{ share_url }}" aria-label="Share by email">{% include icon.html name="mail" %}</a></li>
+    <li><button type="button" class="copy-link" data-url="{{ page.url | absolute_url }}" aria-label="Copy link">{% include icon.html name="link" %}</button></li>
+  </ul>
+</div>

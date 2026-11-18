@@ -1,0 +1,32 @@
+# Homepage curation. Use article slugs = the file name without the date
+# and .md, e.g. 2026-11-17-how-creative-workspaces-encourage-innovation.md
+# -> how-creative-workspaces-encourage-innovation
+#
+# Leave a value empty to fall back to automatic behaviour:
+#   hero      -> newest article with `featured: true`, else newest article
+#   secondary -> next newest featured articles
+#   trending  -> articles with `trending: true`, else newest
+
+hero: how-coworking-spaces-are-changing-modern-work
+
+secondary:
+  - the-future-of-sustainable-fashion
+  - the-future-of-artificial-intelligence-in-everyday-life
+  - minimalist-interior-design-ideas-for-modern-homes
+
+trending:
+  - how-to-design-a-productive-home-workspace
+  - essential-productivity-habits-for-professionals
+  - the-rise-of-remote-work-around-the-world
+  - how-digital-marketing-is-transforming-small-businesses
+
+latest_count: 6
+
+# Category rows shown on the homepage, in order
+sections:
+  - fashion
+  - business
+  - coworking
+  - technology
+  - lifestyle
+  - home-design

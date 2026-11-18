@@ -1,0 +1,82 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <p class="topbar__tagline">{{ site.tagline }}</p>
+      <p class="topbar__meta"><a href="{{ '/#newsletter' | relative_url }}">Newsletter</a><span aria-hidden="true">·</span><a href="{{ '/about/' | relative_url }}">About</a></p>
+    </div>
+  </div>
+
+  <div class="masthead container">
+    <button class="icon-btn menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+      {% include icon.html name="menu" %}
+    </button>
+    <a class="wordmark" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} — home">
+      <span class="wordmark__the">The</span> Urban Edit
+    </a>
+    <button class="icon-btn search-toggle" type="button" aria-controls="search-panel" aria-expanded="false" aria-label="Search the magazine">
+      {% include icon.html name="search" %}
+    </button>
+  </div>
+
+  <nav class="mainnav" aria-label="Main">
+    <div class="container mainnav__inner">
+      <ul class="mainnav__list">
+        {%- for item in site.data.navigation.main %}
+        <li>{% include nav-link.html item=item %}</li>
+        {%- endfor %}
+        <li class="has-dropdown">
+          <button class="dropdown-toggle" type="button" aria-expanded="false" aria-controls="more-menu">More {% include icon.html name="chevron" %}</button>
+          <ul class="dropdown" id="more-menu" hidden>
+            {%- for item in site.data.navigation.more %}
+            <li>{% include nav-link.html item=item full=true %}</li>
+            {%- endfor %}
+          </ul>
+        </li>
+      </ul>
+      <button class="mainnav__search search-toggle" type="button" aria-controls="search-panel" aria-expanded="false">
+        {% include icon.html name="search" %}<span>Search</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="search-panel" id="search-panel" hidden>
+    <div class="container">
+      <form class="search-form" action="{{ '/search/' | relative_url }}" method="get" role="search">
+        <label class="visually-hidden" for="search-panel-input">Search articles</label>
+        <input id="search-panel-input" type="search" name="q" placeholder="Search stories, topics, ideas…" autocomplete="off">
+        <button type="submit" class="btn btn--dark">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <div class="mobile-menu__inner">
+      <div class="mobile-menu__head">
+        <span class="wordmark wordmark--small"><span class="wordmark__the">The</span> Urban Edit</span>
+        <button class="icon-btn menu-close" type="button" aria-label="Close menu">{% include icon.html name="close" %}</button>
+      </div>
+      <form class="search-form search-form--compact" action="{{ '/search/' | relative_url }}" method="get" role="search">
+        <label class="visually-hidden" for="mobile-search-input">Search articles</label>
+        <input id="mobile-search-input" type="search" name="q" placeholder="Search the magazine">
+        <button type="submit" class="icon-btn" aria-label="Submit search">{% include icon.html name="search" %}</button>
+      </form>
+      <nav aria-label="Mobile">
+        <p class="mobile-menu__label">Sections</p>
+        <ul class="mobile-menu__list">
+          <li><a href="{{ '/' | relative_url }}">Home</a></li>
+          {%- for cat in site.data.categories %}
+          <li><a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}">{{ cat.name }}</a></li>
+          {%- endfor %}
+          <li><a href="{{ '/articles/' | relative_url }}">All articles</a></li>
+        </ul>
+        <p class="mobile-menu__label">The magazine</p>
+        <ul class="mobile-menu__list mobile-menu__list--small">
+          {%- for item in site.data.navigation.footer %}
+          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

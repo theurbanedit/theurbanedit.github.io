@@ -1,0 +1,97 @@
+# ---------------------------------------------------------------
+# The Urban Edit — site configuration
+# Changes to this file need a rebuild (GitHub Pages does this
+# automatically on every push).
+# ---------------------------------------------------------------
+
+title: "The Urban Edit"
+tagline: "Ideas, Spaces & Stories for Modern Living."
+description: >-
+  The Urban Edit is an independent digital magazine covering modern
+  lifestyle, fashion, business, coworking, technology, interiors, travel,
+  productivity and culture.
+lang: en
+locale: en_US
+
+# If the site is served from https://theurbanedit.github.io/ keep baseurl "".
+# If it lives at https://USERNAME.github.io/REPO/ set url to
+# https://USERNAME.github.io and baseurl to "/REPO".
+url: "https://theurbanedit.github.io"
+baseurl: ""
+
+# Organisation details used in structured data and the footer
+publisher:
+  name: "The Urban Edit"
+  logo: /assets/images/brand/logo-512.png
+  founded: 2026
+default_author: "The Urban Edit Editorial Team"
+default_image: /assets/images/brand/og-default.jpg
+
+# Optional: Twitter/X handle without @ (leave blank until the account exists)
+twitter_username: ""
+
+# Contact address shown on the Contact page (leave blank to hide)
+contact_email: ""
+
+# Newsletter: paste the form "action" URL from your email provider
+# (Buttondown, Mailchimp, ConvertKit/Kit, Beehiiv...). Leave blank and the
+# form will tell readers sign-ups are opening soon — nothing is collected.
+newsletter:
+  action: ""
+  email_field: "email"
+
+# Number of articles per page on category and archive pages (client side)
+per_page: 9
+
+# ---------------------------------------------------------------
+# Build settings (GitHub Pages compatible)
+# ---------------------------------------------------------------
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  hard_wrap: false
+highlighter: rouge
+timezone: Asia/Karachi
+permalink: /:title/
+excerpt_separator: "<!--more-->"
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+feed:
+  path: feed.xml
+
+collections:
+  topics:
+    output: true
+    permalink: /:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author: "The Urban Edit Editorial Team"
+  - scope:
+      path: ""
+      type: topics
+    values:
+      layout: category
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - _templates/
+  - tools/
+  - node_modules/
+  - vendor/
+  - .github/

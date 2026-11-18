@@ -1,0 +1,24 @@
+<section class="newsletter" id="newsletter" aria-labelledby="newsletter-title">
+  <div class="container newsletter__inner">
+    <div class="newsletter__copy">
+      <p class="eyebrow">The Weekly Edit</p>
+      <h2 id="newsletter-title" class="newsletter__title">One thoughtful email, every Sunday.</h2>
+      <p>Our best new stories on style, work, spaces and ideas, with a short reading list from the editors. No noise, unsubscribe anytime.</p>
+    </div>
+    {%- if site.newsletter.action and site.newsletter.action != "" %}
+    <form class="newsletter__form" action="{{ site.newsletter.action }}" method="post" target="_blank">
+      <label class="visually-hidden" for="nl-email">Email address</label>
+      <input id="nl-email" type="email" name="{{ site.newsletter.email_field | default: 'email' }}" placeholder="Your email address" required autocomplete="email">
+      <button class="btn btn--light" type="submit">Subscribe</button>
+      <p class="newsletter__note">By subscribing you agree to our <a href="{{ '/privacy-policy/' | relative_url }}">Privacy Policy</a>.</p>
+    </form>
+    {%- else %}
+    <form class="newsletter__form" data-newsletter-pending>
+      <label class="visually-hidden" for="nl-email">Email address</label>
+      <input id="nl-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+      <button class="btn btn--light" type="submit">Subscribe</button>
+      <p class="newsletter__note" role="status" aria-live="polite">Sign-ups open soon. Nothing you type here is stored or sent.</p>
+    </form>
+    {%- endif %}
+  </div>
+</section>

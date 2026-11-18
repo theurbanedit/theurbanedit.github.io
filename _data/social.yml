@@ -1,0 +1,17 @@
+# Social profiles shown in the footer. Only entries with a url are displayed.
+# Add the full profile URL once each account exists.
+- name: Instagram
+  icon: instagram
+  url: ""
+- name: X
+  icon: x
+  url: ""
+- name: LinkedIn
+  icon: linkedin
+  url: ""
+- name: Pinterest
+  icon: pinterest
+  url: ""
+- name: Facebook
+  icon: facebook
+  url: ""

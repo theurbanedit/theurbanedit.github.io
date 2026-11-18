@@ -1,0 +1,27 @@
+{%- comment -%}
+  Article card. Params: post, style ("" | "large" | "list" | "mini"), eager (true for above-the-fold)
+{%- endcomment -%}
+{%- assign p = include.post -%}
+{%- assign c = site.data.categories | where: "slug", p.categories[0] | first -%}
+{%- assign words = p.content | number_of_words -%}
+{%- assign mins = words | divided_by: 220 | at_least: 1 -%}
+{%- assign thumb = p.thumbnail | default: p.image -%}
+<article class="card{% if include.style %} card--{{ include.style }}{% endif %}">
+  {%- if thumb and include.style != "mini" %}
+  <a class="card__media" href="{{ p.url | relative_url }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ thumb | relative_url }}"{% if p.thumbnail %} srcset="{{ p.thumbnail | relative_url }} 800w, {{ p.image | relative_url }} 1600w" sizes="{% if include.style == 'large' %}(min-width: 960px) 60vw, 100vw{% else %}(min-width: 960px) 30vw, (min-width: 600px) 50vw, 100vw{% endif %}"{% endif %} alt="{{ p.image_alt | escape }}" width="800" height="500" {% if include.eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+  </a>
+  {%- endif %}
+  <div class="card__body">
+    {%- if c %}<a class="kicker" href="{{ '/' | append: c.slug | append: '/' | relative_url }}" style="--cat: {{ c.color }}">{{ c.short }}</a>{% endif %}
+    {%- if include.heading == "h2" %}
+    <h2 class="card__title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
+    {%- else %}
+    <h3 class="card__title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+    {%- endif %}
+    {%- if include.style != "mini" %}
+    <p class="card__excerpt">{{ p.description | default: p.excerpt | strip_html | truncate: 150 }}</p>
+    {%- endif %}
+    <p class="meta"><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%-d %b %Y" }}</time><span aria-hidden="true">·</span>{{ mins }} min read</p>
+  </div>
+</article>

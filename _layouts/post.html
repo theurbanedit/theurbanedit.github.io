@@ -1,0 +1,107 @@
+---
+layout: default
+body_class: post
+---
+{%- assign cat = site.data.categories | where: "slug", page.categories[0] | first -%}
+{%- assign words = content | number_of_words -%}
+{%- assign mins = words | divided_by: 220 | at_least: 1 -%}
+<article class="article">
+  <header class="article__header container container--mid">
+    {% include breadcrumbs.html cat=cat current=page.title %}
+    {%- if cat %}<a class="kicker" href="{{ '/' | append: cat.slug | append: '/' | relative_url }}" style="--cat: {{ cat.color }}">{{ cat.name }}</a>{% endif %}
+    <h1 class="article__title">{{ page.title }}</h1>
+    {%- if page.description %}<p class="article__dek">{{ page.description }}</p>{% endif %}
+    <div class="article__byline">
+      <p>By <a href="{{ '/about/#editorial-team' | relative_url }}">{{ page.author | default: site.default_author }}</a></p>
+      <p class="meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+        {%- if page.updated %}<span aria-hidden="true">·</span>Updated <time datetime="{{ page.updated | date_to_xmlschema }}">{{ page.updated | date: "%-d %B %Y" }}</time>{% endif %}
+        <span aria-hidden="true">·</span>{{ mins }} min read
+      </p>
+    </div>
+  </header>
+
+  {%- if page.image %}
+  <figure class="article__hero">
+    <img src="{{ page.image | relative_url }}"{% if page.thumbnail %} srcset="{{ page.thumbnail | relative_url }} 800w, {{ page.image | relative_url }} 1600w" sizes="(min-width: 1200px) 1200px, 100vw"{% endif %} alt="{{ page.image_alt | escape }}" width="1600" height="1000" fetchpriority="high" decoding="async">
+    {%- if page.image_credit %}<figcaption>{{ page.image_credit }}</figcaption>{% endif %}
+  </figure>
+  {%- endif %}
+
+  <div class="article__layout container">
+    <aside class="article__aside">
+      <nav class="toc" aria-labelledby="toc-title" hidden>
+        <p class="toc__title" id="toc-title">In this article</p>
+        <ol class="toc__list"></ol>
+      </nav>
+      {% include share.html %}
+    </aside>
+
+    <div class="article__body prose prose--article">
+      {{ content }}
+
+      {%- if page.sources %}
+      <section class="sources" aria-labelledby="sources-title">
+        <h2 id="sources-title">Sources &amp; further reading</h2>
+        <ol>
+          {%- for s in page.sources %}
+          <li><a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.title }}</a>{% if s.publisher %} — {{ s.publisher }}{% endif %}</li>
+          {%- endfor %}
+        </ol>
+      </section>
+      {%- endif %}
+
+      {%- if page.tags.size > 0 %}
+      <ul class="tags" aria-label="Tags">
+        {%- for tag in page.tags %}
+        <li><a href="{{ '/search/' | relative_url }}?q={{ tag | url_encode }}">#{{ tag }}</a></li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+
+      {%- if page.sample %}
+      <aside class="editor-note">
+        <p><strong>Launch edition note.</strong> This article is part of The Urban Edit’s launch collection and was prepared with AI-assisted drafting. The illustration is original abstract artwork made for the magazine. Read our <a href="{{ '/editorial-policy/' | relative_url }}">editorial policy</a>.</p>
+      </aside>
+      {%- endif %}
+    </div>
+  </div>
+</article>
+
+{%- comment -%} Related: same primary category first, then shared categories, then newest {%- endcomment -%}
+{%- assign picked = "|" | append: page.url | append: "|" -%}
+{%- assign related = "" | split: "" -%}
+{%- for p in site.posts -%}
+  {%- if related.size >= 3 -%}{%- break -%}{%- endif -%}
+  {%- assign key = "|" | append: p.url | append: "|" -%}
+  {%- if picked contains key -%}{%- continue -%}{%- endif -%}
+  {%- if p.categories contains page.categories[0] -%}
+    {%- assign related = related | push: p -%}{%- assign picked = picked | append: key -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- for p in site.posts -%}
+  {%- if related.size >= 3 -%}{%- break -%}{%- endif -%}
+  {%- assign key = "|" | append: p.url | append: "|" -%}
+  {%- if picked contains key -%}{%- continue -%}{%- endif -%}
+  {%- assign shared = false -%}
+  {%- for c in page.categories -%}{%- if p.categories contains c -%}{%- assign shared = true -%}{%- endif -%}{%- endfor -%}
+  {%- for t in page.tags -%}{%- if p.tags contains t -%}{%- assign shared = true -%}{%- endif -%}{%- endfor -%}
+  {%- if shared -%}{%- assign related = related | push: p -%}{%- assign picked = picked | append: key -%}{%- endif -%}
+{%- endfor -%}
+{%- for p in site.posts -%}
+  {%- if related.size >= 3 -%}{%- break -%}{%- endif -%}
+  {%- assign key = "|" | append: p.url | append: "|" -%}
+  {%- if picked contains key -%}{%- continue -%}{%- endif -%}
+  {%- assign related = related | push: p -%}{%- assign picked = picked | append: key -%}
+{%- endfor -%}
+{%- if related.size > 0 %}
+<section class="related container" aria-labelledby="related-title">
+  <div class="section-head"><h2 id="related-title" class="section-head__title">Keep reading</h2></div>
+  <div class="grid grid--3">
+    {%- for p in related %}
+    {% include card.html post=p %}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+{% include newsletter.html %}

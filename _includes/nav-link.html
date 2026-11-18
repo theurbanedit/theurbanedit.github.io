@@ -1,0 +1,14 @@
+{%- comment -%} Renders one navigation link. Param: item (from _data/navigation.yml) {%- endcomment -%}
+{%- if include.item.category -%}
+  {%- assign navcat = site.data.categories | where: "slug", include.item.category | first -%}
+  {%- assign nav_url = "/" | append: navcat.slug | append: "/" -%}
+  {%- assign nav_title = include.label | default: navcat.short -%}
+  {%- if include.full -%}{%- assign nav_title = navcat.name -%}{%- endif -%}
+{%- else -%}
+  {%- assign nav_url = include.item.url -%}
+  {%- assign nav_title = include.item.title -%}
+{%- endif -%}
+{%- assign current = false -%}
+{%- if page.url == nav_url -%}{%- assign current = true -%}{%- endif -%}
+{%- if include.item.category and page.collection == "posts" and page.categories[0] == include.item.category -%}{%- assign current = true -%}{%- endif -%}
+<a href="{{ nav_url | relative_url }}"{% if current %} aria-current="page"{% endif %}{% if include.class %} class="{{ include.class }}"{% endif %}>{{ nav_title }}</a>

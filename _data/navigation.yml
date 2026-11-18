@@ -1,0 +1,37 @@
+# Main navigation. Items in `main` appear in the header bar;
+# items in `more` appear in the "More" dropdown.
+# Use a category slug (from _data/categories.yml) OR a title + url.
+
+main:
+  - title: "Home"
+    url: /
+  - category: fashion
+  - category: business
+  - category: coworking
+  - category: technology
+  - category: lifestyle
+
+more:
+  - category: home-design
+  - category: travel
+  - category: wellness
+  - category: productivity
+  - category: marketing
+  - category: architecture
+  - category: culture
+  - title: "All articles"
+    url: /articles/
+
+footer:
+  - title: "About"
+    url: /about/
+  - title: "Contact"
+    url: /contact/
+  - title: "Editorial Policy"
+    url: /editorial-policy/
+  - title: "Privacy Policy"
+    url: /privacy-policy/
+  - title: "Terms & Conditions"
+    url: /terms/
+  - title: "RSS Feed"
+    url: /feed.xml

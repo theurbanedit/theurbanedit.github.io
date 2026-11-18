@@ -1,0 +1,7 @@
+{%- comment -%} Paginated grid. Params: posts {%- endcomment -%}
+<div class="grid grid--3" data-paginate="{{ site.per_page | default: 9 }}">
+  {%- for post in include.posts %}
+  {% include card.html post=post heading="h2" %}
+  {%- endfor %}
+</div>
+<nav class="pager" aria-label="Pagination" hidden></nav>

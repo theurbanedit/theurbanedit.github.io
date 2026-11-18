@@ -1,0 +1,33 @@
+---
+layout: default
+---
+{%- assign cat = site.data.categories | where: "slug", page.category | first -%}
+{%- assign cat_posts = site.posts | where_exp: "p", "p.categories contains page.category" -%}
+<div class="container">
+  {% include breadcrumbs.html current=cat.name %}
+  <header class="section-hero" style="--cat: {{ cat.color }}">
+    <p class="eyebrow">Section</p>
+    <h1 class="section-hero__title">{{ cat.name }}</h1>
+    <p class="section-hero__intro">{{ cat.intro }}</p>
+    {{ content }}
+    <p class="meta">{{ cat_posts.size }} {% if cat_posts.size == 1 %}story{% else %}stories{% endif %}</p>
+  </header>
+
+  {%- if cat_posts.size > 0 %}
+  {%- assign lead = cat_posts | first %}
+  <section class="cat-lead" aria-label="Featured in {{ cat.name }}">
+    {% include card.html post=lead style="large" heading="h2" eager=true %}
+  </section>
+
+  {%- assign rest = cat_posts | slice: 1, 999 %}
+  {%- if rest.size > 0 %}
+  <section aria-labelledby="more-in">
+    <div class="section-head"><h2 id="more-in" class="section-head__title">More in {{ cat.short }}</h2></div>
+    {% include post-grid.html posts=rest %}
+  </section>
+  {%- endif %}
+  {%- else %}
+  <p class="empty">New stories for this section are on the way. In the meantime, explore <a href="{{ '/articles/' | relative_url }}">all articles</a>.</p>
+  {%- endif %}
+</div>
+{% include newsletter.html %}

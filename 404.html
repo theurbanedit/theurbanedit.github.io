@@ -1,0 +1,18 @@
+---
+layout: default
+title: "Page not found"
+permalink: /404.html
+noindex: true
+sitemap: false
+---
+<div class="container notfound">
+  <p class="notfound__code" aria-hidden="true">404</p>
+  <h1>This page has moved, or never existed.</h1>
+  <p>The link may be outdated or mistyped. Try a search, or head back to the front page for the latest stories.</p>
+  <form class="search-form" action="{{ '/search/' | relative_url }}" method="get" role="search">
+    <label class="visually-hidden" for="nf-search">Search articles</label>
+    <input id="nf-search" type="search" name="q" placeholder="Search the magazine">
+    <button class="btn btn--dark" type="submit">Search</button>
+  </form>
+  <a class="btn btn--dark" href="{{ '/' | relative_url }}">Back to the front page</a>
+</div>

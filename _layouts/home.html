@@ -1,0 +1,119 @@
+---
+layout: default
+body_class: home
+---
+{%- assign hp = site.data.homepage -%}
+{%- assign featured = site.posts | where: "featured", true -%}
+
+{%- comment -%} Hero {%- endcomment -%}
+{%- assign hero = nil -%}
+{%- if hp.hero -%}{%- assign hero = site.posts | where: "slug", hp.hero | first -%}{%- endif -%}
+{%- unless hero -%}{%- assign hero = featured | first | default: site.posts.first -%}{%- endunless -%}
+
+{%- assign shown = "|" | append: hero.url | append: "|" -%}
+{%- assign secondary = "" | split: "" -%}
+{%- for s in hp.secondary -%}
+  {%- assign sp = site.posts | where: "slug", s | first -%}
+  {%- if sp -%}{%- assign secondary = secondary | push: sp -%}{%- assign shown = shown | append: sp.url | append: "|" -%}{%- endif -%}
+{%- endfor -%}
+{%- if secondary.size == 0 -%}
+  {%- for p in featured -%}{%- if p.url != hero.url and secondary.size < 3 -%}{%- assign secondary = secondary | push: p -%}{%- endif -%}{%- endfor -%}
+{%- endif -%}
+
+{%- assign hero_cat = site.data.categories | where: "slug", hero.categories[0] | first -%}
+{%- assign hero_mins = hero.content | number_of_words | divided_by: 220 | at_least: 1 -%}
+
+<h1 class="visually-hidden">{{ site.title }} — {{ site.tagline }}</h1>
+
+<section class="hero container" aria-label="Cover story">
+  <article class="hero__main">
+    <a class="hero__media" href="{{ hero.url | relative_url }}" tabindex="-1" aria-hidden="true">
+      <img src="{{ hero.image | relative_url }}" srcset="{{ hero.thumbnail | default: hero.image | relative_url }} 800w, {{ hero.image | relative_url }} 1600w" sizes="(min-width: 960px) 62vw, 100vw" alt="{{ hero.image_alt | escape }}" width="1600" height="1000" fetchpriority="high" decoding="async">
+    </a>
+    <div class="hero__text">
+      <p class="eyebrow">Cover story{% if hero_cat %} · <a href="{{ '/' | append: hero_cat.slug | append: '/' | relative_url }}">{{ hero_cat.short }}</a>{% endif %}</p>
+      <h2 class="hero__title"><a href="{{ hero.url | relative_url }}">{{ hero.title }}</a></h2>
+      <p class="hero__dek">{{ hero.description | default: hero.excerpt | strip_html | truncate: 220 }}</p>
+      <p class="meta">{{ hero.author | default: site.default_author }}<span aria-hidden="true">·</span>{{ hero_mins }} min read</p>
+      <a class="readmore" href="{{ hero.url | relative_url }}">Read the story {% include icon.html name="arrow" %}</a>
+    </div>
+  </article>
+  <div class="hero__side">
+    <p class="side-label">Also in this issue</p>
+    {%- for p in secondary %}
+    {% include card.html post=p style="list" %}
+    {%- endfor %}
+  </div>
+</section>
+
+{%- comment -%} Trending {%- endcomment -%}
+{%- assign trending = "" | split: "" -%}
+{%- for s in hp.trending -%}
+  {%- assign tp = site.posts | where: "slug", s | first -%}
+  {%- if tp -%}{%- assign trending = trending | push: tp -%}{%- endif -%}
+{%- endfor -%}
+{%- if trending.size == 0 -%}{%- assign trending = site.posts | where: "trending", true -%}{%- endif -%}
+{%- if trending.size == 0 -%}{%- assign trending = site.posts | slice: 0, 4 -%}{%- endif -%}
+<section class="trending" aria-labelledby="trending-title">
+  <div class="container">
+    <div class="section-head"><h2 id="trending-title" class="section-head__title">Trending</h2><p class="section-head__note">What readers are opening this week</p></div>
+    <ol class="trending__list">
+      {%- for p in trending limit: 4 %}
+      {%- assign tc = site.data.categories | where: "slug", p.categories[0] | first %}
+      <li class="trending__item">
+        <span class="trending__num" aria-hidden="true">{{ forloop.index | prepend: "0" }}</span>
+        <div>
+          <a class="kicker" href="{{ '/' | append: tc.slug | append: '/' | relative_url }}" style="--cat: {{ tc.color }}">{{ tc.short }}</a>
+          <h3 class="trending__title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+        </div>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+{%- comment -%} Latest {%- endcomment -%}
+<section class="container latest" aria-labelledby="latest-title">
+  <div class="section-head"><h2 id="latest-title" class="section-head__title">Latest</h2><a class="section-head__link" href="{{ '/articles/' | relative_url }}">All articles {% include icon.html name="arrow" %}</a></div>
+  <div class="grid grid--3">
+    {%- for p in site.posts limit: hp.latest_count %}
+    {% include card.html post=p %}
+    {%- endfor %}
+  </div>
+</section>
+
+{%- comment -%} Category rows {%- endcomment -%}
+{%- for slug in hp.sections %}
+{%- assign sc = site.data.categories | where: "slug", slug | first %}
+{%- assign sposts = site.posts | where_exp: "p", "p.categories contains slug" %}
+{%- if sposts.size > 0 %}
+<section class="container cat-row{% cycle '', ' cat-row--alt' %}" aria-labelledby="row-{{ slug }}" style="--cat: {{ sc.color }}">
+  <div class="section-head">
+    <h2 id="row-{{ slug }}" class="section-head__title">{{ sc.name }}</h2>
+    <a class="section-head__link" href="{{ '/' | append: slug | append: '/' | relative_url }}">View section {% include icon.html name="arrow" %}</a>
+  </div>
+  <div class="cat-row__grid">
+    {%- for p in sposts limit: 1 %}
+    {% include card.html post=p style="large" %}
+    {%- endfor %}
+    <div class="cat-row__list">
+      <p class="cat-row__intro">{{ sc.intro }}</p>
+      {%- for p in sposts offset: 1 limit: 3 %}
+      {% include card.html post=p style="mini" %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+{%- endfor %}
+
+<section class="container explore" aria-labelledby="explore-title">
+  <div class="section-head"><h2 id="explore-title" class="section-head__title">Explore every section</h2></div>
+  <ul class="explore__list">
+    {%- for c in site.data.categories %}
+    <li><a href="{{ '/' | append: c.slug | append: '/' | relative_url }}" style="--cat: {{ c.color }}"><span>{{ c.name }}</span>{% include icon.html name="arrow" %}</a></li>
+    {%- endfor %}
+  </ul>
+</section>
+
+{% include newsletter.html %}

@@ -1,0 +1,92 @@
+# Every category in the magazine.
+# slug   -> must match the file name in _topics/ (e.g. _topics/fashion.md)
+#           and the value used in an article's `categories:` list.
+# name   -> full display name
+# short  -> short label used in navigation and on cards
+# intro  -> paragraph shown at the top of the category page and used as its meta description
+# color  -> accent colour for the category label
+# subcategories -> optional; use the slugs as tags on articles
+
+- slug: fashion
+  name: "Fashion & Style"
+  short: "Fashion"
+  color: "#9B3D2C"
+  intro: "Considered style for real life — the trends worth knowing, the history behind what we wear, and the slower, smarter ways to build a wardrobe."
+  subcategories: [trends, sustainable-fashion, menswear, womenswear]
+
+- slug: business
+  name: "Business & Entrepreneurship"
+  short: "Business"
+  color: "#1F4E5F"
+  intro: "Practical thinking for founders, freelancers and small-business owners: strategy, money, operations and the decisions that shape a company."
+  subcategories: [startups, strategy, small-business, leadership]
+
+- slug: coworking
+  name: "Coworking & Workspaces"
+  short: "Coworking"
+  color: "#5B6B3A"
+  intro: "Where and how we work now — coworking spaces, flexible offices, remote teams and the design of places that help people do their best work."
+  subcategories: [remote-work, office-design, flexible-work]
+
+- slug: technology
+  name: "Technology & Innovation"
+  short: "Technology"
+  color: "#2F3E73"
+  intro: "Clear-eyed coverage of the tools and ideas changing everyday life, from artificial intelligence to the apps quietly reorganising our routines."
+  subcategories: [artificial-intelligence, gadgets, software, digital-life]
+
+- slug: lifestyle
+  name: "Lifestyle"
+  short: "Lifestyle"
+  color: "#8A5A2B"
+  intro: "Ideas for living well in the city and beyond — habits, rituals, food, money and the small choices that add up to a good life."
+  subcategories: [trends, living, food, personal-finance]
+
+- slug: home-design
+  name: "Home & Interior Design"
+  short: "Home & Design"
+  color: "#7A5C4F"
+  intro: "Interiors with intention: layouts, materials, light and the design decisions that make a home calm, useful and personal."
+  subcategories: [interiors, minimalism, home-office, decor]
+
+- slug: travel
+  name: "Travel & Destinations"
+  short: "Travel"
+  color: "#2E6A6A"
+  intro: "Destinations, slow travel and life on the move — including the growing world of people who work from wherever they happen to be."
+  subcategories: [destinations, digital-nomads, city-guides]
+
+- slug: wellness
+  name: "Health & Wellness"
+  short: "Wellness"
+  color: "#4E7A5A"
+  intro: "Evidence-minded wellbeing: movement, rest, focus and the everyday conditions that help body and mind work well."
+  subcategories: [fitness, sleep, mental-health, nutrition]
+
+- slug: productivity
+  name: "Productivity & Career"
+  short: "Productivity"
+  color: "#6B4C7A"
+  intro: "Better work, not just more of it — habits, systems, careers and the craft of focusing on what matters."
+  subcategories: [habits, focus, career-growth, tools]
+
+- slug: marketing
+  name: "Marketing & Digital Growth"
+  short: "Marketing"
+  color: "#A0522D"
+  intro: "How brands and small businesses find their audience online: search, social, email, content and honest measurement."
+  subcategories: [seo, social-media, email-marketing, content-marketing]
+
+- slug: architecture
+  name: "Architecture & Design"
+  short: "Architecture"
+  color: "#45505A"
+  intro: "Buildings, objects and the thinking behind them — how design shapes the way we gather, create and live."
+  subcategories: [workplace-design, urbanism, product-design]
+
+- slug: culture
+  name: "Culture & Entertainment"
+  short: "Culture"
+  color: "#7D3C5A"
+  intro: "Books, film, music, art and the cultural currents shaping how we see the world and each other."
+  subcategories: [books, film, music, art]

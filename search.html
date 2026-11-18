@@ -1,0 +1,16 @@
+---
+layout: page
+title: "Search"
+permalink: /search/
+noindex: true
+sitemap: false
+body_class: search-page
+description: "Search every story in The Urban Edit."
+---
+<form class="search-form" action="{{ '/search/' | relative_url }}" method="get" role="search" onsubmit="return false">
+  <label class="visually-hidden" for="search-input">Search articles</label>
+  <input id="search-input" type="search" name="q" placeholder="Search stories, topics, ideas…" autocomplete="off">
+</form>
+<p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+<ol class="search-results" id="search-results" data-index="{{ '/search.json' | relative_url }}"></ol>
+<noscript><p>Search needs JavaScript. You can browse <a href="{{ '/articles/' | relative_url }}">all articles</a> instead.</p></noscript>

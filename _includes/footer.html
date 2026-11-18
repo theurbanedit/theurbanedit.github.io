@@ -1,0 +1,40 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="wordmark wordmark--footer" href="{{ '/' | relative_url }}"><span class="wordmark__the">The</span> Urban Edit</a>
+        <p>{{ site.tagline }}</p>
+        <p class="footer__small">An independent digital magazine about modern living, work and culture.</p>
+      </div>
+      <nav class="footer__col" aria-label="Sections">
+        <h2 class="footer__heading">Sections</h2>
+        <ul class="footer__list footer__list--two">
+          {%- for cat in site.data.categories %}
+          <li><a href="{{ '/' | append: cat.slug | append: '/' | relative_url }}">{{ cat.short }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-label="The magazine">
+        <h2 class="footer__heading">The magazine</h2>
+        <ul class="footer__list">
+          {%- for item in site.data.navigation.footer %}
+          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      <div class="footer__col">
+        <h2 class="footer__heading">Follow</h2>
+        <ul class="social">
+          {%- for s in site.data.social %}{% if s.url != "" %}
+          <li><a href="{{ s.url }}" rel="me noopener" target="_blank" aria-label="{{ site.title }} on {{ s.name }}">{% include icon.html name=s.icon %}</a></li>
+          {%- endif %}{% endfor %}
+          <li><a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS feed">{% include icon.html name="rss" %}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+      <p><a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a></p>
+    </div>
+  </div>
+</footer>

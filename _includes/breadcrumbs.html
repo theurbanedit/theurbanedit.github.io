@@ -1,0 +1,9 @@
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ '/' | relative_url }}">Home</a></li>
+    {%- if include.cat %}
+    <li><a href="{{ '/' | append: include.cat.slug | append: '/' | relative_url }}">{{ include.cat.name }}</a></li>
+    {%- endif %}
+    <li aria-current="page">{{ include.current }}</li>
+  </ol>
+</nav>
