@@ -4,7 +4,7 @@
 {%- assign p = include.post -%}
 {%- assign c = site.data.categories | where: "slug", p.categories[0] | first -%}
 {%- assign words = p.content | number_of_words -%}
-{%- assign mins = words | divided_by: 220 | at_least: 1 -%}
+{%- assign mins = words | plus: 199 | divided_by: 200 | at_least: 1 -%}
 {%- assign thumb = p.thumbnail | default: p.image -%}
 <article class="card{% if include.style %} card--{{ include.style }}{% endif %}">
   {%- if thumb and include.style != "mini" %}

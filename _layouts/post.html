@@ -4,7 +4,7 @@ body_class: post
 ---
 {%- assign cat = site.data.categories | where: "slug", page.categories[0] | first -%}
 {%- assign words = content | number_of_words -%}
-{%- assign mins = words | divided_by: 220 | at_least: 1 -%}
+{%- assign mins = words | plus: 199 | divided_by: 200 | at_least: 1 -%}
 <article class="article">
   <header class="article__header container container--mid">
     {% include breadcrumbs.html cat=cat current=page.title %}

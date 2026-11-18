@@ -21,7 +21,7 @@ body_class: home
 {%- endif -%}
 
 {%- assign hero_cat = site.data.categories | where: "slug", hero.categories[0] | first -%}
-{%- assign hero_mins = hero.content | number_of_words | divided_by: 220 | at_least: 1 -%}
+{%- assign hero_mins = hero.content | number_of_words | plus: 199 | divided_by: 200 | at_least: 1 -%}
 
 <h1 class="visually-hidden">{{ site.title }} — {{ site.tagline }}</h1>
 
