@@ -73,6 +73,8 @@
 {%- comment -%} ---------- Structured data ---------- {%- endcomment -%}
 {%- assign org_id = "/#organization" | absolute_url -%}
 {%- assign site_id = "/#website" | absolute_url -%}
+{%- capture search_tpl %}{{ "/search/" | absolute_url }}?q={search_term_string{% endcapture -%}
+{%- assign search_tpl = search_tpl | append: "}" -%}
 {%- if is_home %}
 <script type="application/ld+json">
 {
@@ -102,7 +104,7 @@
       "publisher": { "@id": {{ org_id | jsonify }} },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": { "@type": "EntryPoint", "urlTemplate": {{ "/search/" | absolute_url | append: "?q={search_term_string}" | jsonify }} },
+        "target": { "@type": "EntryPoint", "urlTemplate": {{ search_tpl | jsonify }} },
         "query-input": "required name=search_term_string"
       }
     }
